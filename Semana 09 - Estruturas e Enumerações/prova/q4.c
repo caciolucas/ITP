@@ -63,17 +63,17 @@ bd_irmaos inserir_irmao(bd_pessoas Pessoas, bd_irmaos Irmaos, int id1, int id2)
 {
     for (int i = 0; i < Irmaos.num_relacoes; i++)
     {
-        if (id1 == Irmaos.irmaos->id1)
+        if (id1 == Irmaos.irmaos[i].id1)
         {
-            if (id2 == Irmaos.irmaos->id2)
+            if (id2 == Irmaos.irmaos[i].id2)
             {
                 printf("Parentesco %d %d já cadastrado!\n", id1, id2);
                 return Irmaos;
             }
         }
-        else if (id1 == Irmaos.irmaos->id2)
+        else if (id1 == Irmaos.irmaos[i].id2)
         {
-            if (id2 == Irmaos.irmaos->id1)
+            if (id2 == Irmaos.irmaos[i].id1)
             {
                 printf("Parentesco %d %d já cadastrado!\n", id1, id2);
                 return Irmaos;

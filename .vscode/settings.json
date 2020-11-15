@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "cmath": "c"
+        "cmath": "c",
+        "deque": "c",
+        "string": "c",
+        "vector": "c"
     }
 }
