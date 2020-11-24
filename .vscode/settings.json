@@ -3,6 +3,13 @@
         "cmath": "c",
         "deque": "c",
         "string": "c",
-        "vector": "c"
+        "vector": "c",
+        "array": "c",
+        "bitset": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "regex": "c",
+        "utility": "c",
+        "valarray": "c"
     }
 }

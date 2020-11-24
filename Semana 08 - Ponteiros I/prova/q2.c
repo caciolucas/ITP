@@ -142,7 +142,7 @@ int localizaPalavra(char palavra[], char tabuleiro[10][10], char **primeiraLetra
                         return 0;
                     }
                 }
-                // Verifica Diagonal 1 "/" cima->baixo
+                // Verifica  "/" cima->baixo
                 if (baixo && esquerda)
                 {
                     bool achou = false;
