@@ -21,12 +21,12 @@ typedef struct
 } item;
 
 item inputValues[8];
-double S[1024];
-double I[1024];
-double R[1024];
 
 void createSimulation(int t,FILE *output)
 {
+    double *S = malloc(sizeof(double[t]));
+    double *I = malloc(sizeof(double[t]));
+    double *R = malloc(sizeof(double[t]));
 
     double k = inputValues[m_k].value / (inputValues[n_k].value * inputValues[T_k].value);
 
