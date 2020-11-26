@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
         inputValues[i].value = atof(&linha[x]);
     }
 
-    createSimulation(atoi(argv[3]),output);
+    createSimulation(atoi(argv[3])/inputValues[h].value,output);
     plotSimulation(argv[2]);
 
     return 0;
