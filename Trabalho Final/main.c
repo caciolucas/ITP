@@ -27,6 +27,7 @@ void createSimulation(int t,FILE *output)
     double *S = malloc(sizeof(double[t]));
     double *I = malloc(sizeof(double[t]));
     double *R = malloc(sizeof(double[t]));
+    double *D = malloc(sizeof(double[t]));
 
     double k = inputValues[m_k].value / (inputValues[n_k].value * inputValues[T_k].value);
 
@@ -36,26 +37,25 @@ void createSimulation(int t,FILE *output)
     I[0] = inputValues[I0].value;
     R[0] = inputValues[R0].value;
 
-    fprintf(output, "S(t),I(t),R(t),tempo(t)\n");
+    fprintf(output, "S(t),I(t),R(t),D(t),tempo(t)\n");
     for (int i = 1; i < t; i++)
     {
         S[i] = S[i - 1] - inputValues[h].value * b * S[i - 1] * I[i - 1];
         I[i] = I[i - 1] + inputValues[h].value * (b * S[i - 1] * I[i - 1] - k * I[i - 1]);
         R[i] = R[i - 1] + inputValues[h].value * k * I[i - 1];
+        
     }
 
     for (int i = 0; i < t; i++)
     {
-        //printf("%lf,%lf,%lf,%lf\n",S[i],I[i],R[i],i*inputValues[h].value);
-        fprintf(output, "%lf,%lf,%lf,%lf\n", S[i], I[i], R[i], i * inputValues[h].value);
+        D[i] = R[i]*0.02;
+        fprintf(output, "%lf,%lf,%lf,%lf,%lf\n", S[i], I[i], R[i],D[i], i * inputValues[h].value);
     }
     fclose(output);
 }
 void plotSimulation(char file[]){
     char command[51];
     sprintf(command,"python plot.py %s\n",file);
-    printf("%s\n",command);
-    system("pause");
     system(command);
 }
 int main(int argc, char *argv[])

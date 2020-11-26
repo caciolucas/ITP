@@ -8,10 +8,16 @@
  - *plot.py* (o script pra plotar)
  - *entrada.txt* (o arquivo de entrada dos valores de parametro, atualmente com os valores do exemplo) 
 
-### Como chamar o script
+### Como executar o script
+
+Inicialmente, compile-o em sua máquina, como no exemplo a baixo
 
 ```
-gcc main,c -o main
+gcc main.c -o main
+```
+
+Execute o arquivo compilado
+```
 main entrada.txt output.csv 500
 ```
 
