@@ -24,7 +24,7 @@ plt.plot(t,i, linestyle='-.', markerfacecolor='#FF8C00', label='Infectados')
 plt.plot(t,r, linestyle=':', markerfacecolor='r', label='Removidos')
 plt.plot(t,d, linestyle='--', markerfacecolor='k', label='Mortos')
 
-plt.xlabel('Horas')
+plt.xlabel('Intervalo')
 plt.ylabel('Pessoas')
 plt.title('Grafico SIR')
 plt.legend()
