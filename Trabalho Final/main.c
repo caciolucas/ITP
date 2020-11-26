@@ -2,63 +2,91 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define S0 0
+#define I0 1
+#define R0 2
+#define h 3
+#define N_b 4
+#define T_b 5
+#define S_b0 6
+#define I_b0 7
+#define m_k 8
+#define n_k 9
+#define T_k 10
+
 typedef struct
 {
+    double value;
     char name[20];
-    float value;
 } item;
 
-int tempo(int t)
-{
-    if (t == 1)
-        return 0;
-    else
-        return tempo(t - 1) + 2;
-}
+item inputValues[8];
+double S[1024];
+double I[1024];
+double R[1024];
 
-float calcB(float N, float T, float S0, float I0)
+void createSimulation(int t)
 {
-    return (N) / (T * S0 * I0);
+    printf("%lf\n", inputValues[S0].value);
+    printf("%lf\n", inputValues[I0].value);
+    printf("%lf\n", inputValues[R0].value);
+    printf("%lf\n", inputValues[h].value);
+    printf("%lf\n", inputValues[N_b].value);
+    printf("%lf\n", inputValues[T_b].value);
+    printf("%lf\n", inputValues[S_b0].value);
+    printf("%lf\n", inputValues[I_b0].value);
+    printf("%lf\n", inputValues[m_k].value);
+    printf("%lf\n", inputValues[n_k].value);
+    printf("%lf\n", inputValues[T_k].value);
+
+    double k = inputValues[m_k].value / (inputValues[n_k].value * inputValues[T_k].value);
+
+    double b = inputValues[N_b].value / (inputValues[T_b].value * inputValues[S_b0].value * inputValues[I_b0].value);
+
+    S[0] = inputValues[S0].value;
+    I[0] = inputValues[I0].value;
+    R[0] = inputValues[R0].value;
+
+    FILE *output = fopen("output.csv", "w");
+    fprintf(output, "S(t),I(t),R(t),tempo(t)\n");
+    for (int i = 1; i < t; i++)
+    {
+        S[i] = S[i - 1] - inputValues[h].value * b * S[i - 1] * I[i - 1];
+        I[i] = I[i - 1] + inputValues[h].value * (b * S[i - 1] * I[i - 1] - k * I[i - 1]);
+        R[i] = R[i - 1] + inputValues[h].value * k * I[i - 1];
+    }
+
+    for (int i = 0; i < t; i++)
+    {
+        //printf("%lf,%lf,%lf,%lf\n",S[i],I[i],R[i],i*inputValues[h].value);
+        fprintf(output, "%lf,%lf,%lf,%lf\n", S[i], I[i], R[i], i * inputValues[h].value);
+    }
+    fclose(output);
 }
 
 int main(int argc, char *argv[])
 {
 
-    FILE *input = fopen(argv[1], "r");
+    // FILE *input = fopen(argv[1], "r");
+    FILE *input = fopen("entrada.txt", "r");
 
-    char inputPrefix[10][8] = {
-        "S(0)=",
-
-    };
-    item inputValues[8];
     char linha[11];
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 11; i++)
     {
         fscanf(input, "%[^\n]%*c", linha);
+        sscanf(linha, "%[^=]", inputValues[i].name);
         int x = 0;
-        while (linha[x] <= '0' || linha[x] >= '9')
+        while (linha[x++] != '=')
+            ;
+
+        while (!('0' <= linha[x] && linha[x] <= '9'))
         {
             x++;
         }
-        sscanf(linha,"%[^=]",inputValues[i].name)
-        inputValues[i].value=atof(linha[x]);
-    }
-    
-    for(int i=0; i<8;i++){
-        printf("%s:%.1f\n",inputValues[i].name,inputValues[i].value)
+        inputValues[i].value = atof(&linha[x]);
     }
 
-    printf("%d\n", s0);
-
-    // "S(0)=2"
-
-    // "S(0)=2\n\0"
-
-    // depois checa se foi ou n
-
-    // strtok(linha, "=");
-    // s0 = (NULL, "\n");
-    // printf("%d\n", s0);
+    createSimulation(500);
 
     return 0;
 }
