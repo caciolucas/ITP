@@ -25,19 +25,8 @@ double S[1024];
 double I[1024];
 double R[1024];
 
-void createSimulation(int t)
+void createSimulation(int t,FILE *output)
 {
-    printf("%lf\n", inputValues[S0].value);
-    printf("%lf\n", inputValues[I0].value);
-    printf("%lf\n", inputValues[R0].value);
-    printf("%lf\n", inputValues[h].value);
-    printf("%lf\n", inputValues[N_b].value);
-    printf("%lf\n", inputValues[T_b].value);
-    printf("%lf\n", inputValues[S_b0].value);
-    printf("%lf\n", inputValues[I_b0].value);
-    printf("%lf\n", inputValues[m_k].value);
-    printf("%lf\n", inputValues[n_k].value);
-    printf("%lf\n", inputValues[T_k].value);
 
     double k = inputValues[m_k].value / (inputValues[n_k].value * inputValues[T_k].value);
 
@@ -47,7 +36,6 @@ void createSimulation(int t)
     I[0] = inputValues[I0].value;
     R[0] = inputValues[R0].value;
 
-    FILE *output = fopen("output.csv", "w");
     fprintf(output, "S(t),I(t),R(t),tempo(t)\n");
     for (int i = 1; i < t; i++)
     {
@@ -63,12 +51,19 @@ void createSimulation(int t)
     }
     fclose(output);
 }
-
+void plotSimulation(char file[]){
+    char command[51];
+    sprintf(command,"python plot.py %s\n",file);
+    printf("%s\n",command);
+    system("pause");
+    system(command);
+}
 int main(int argc, char *argv[])
 {
 
-    // FILE *input = fopen(argv[1], "r");
-    FILE *input = fopen("entrada.txt", "r");
+    FILE *input = fopen(argv[1], "r");
+    FILE *output = fopen(argv[2], "w");
+    // FILE *input = fopen("entrada.txt", "r");
 
     char linha[11];
     for (int i = 0; i < 11; i++)
@@ -86,7 +81,8 @@ int main(int argc, char *argv[])
         inputValues[i].value = atof(&linha[x]);
     }
 
-    createSimulation(500);
+    createSimulation(500,output);
+    plotSimulation(argv[2]);
 
     return 0;
 }
