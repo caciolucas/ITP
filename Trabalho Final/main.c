@@ -65,20 +65,20 @@ int main(int argc, char *argv[])
     FILE *output = fopen(argv[2], "w");
     // FILE *input = fopen("entrada.txt", "r");
 
-    char linha[11];
+    char lines[11];
     for (int i = 0; i < 11; i++)
     {
-        fscanf(input, "%[^\n]%*c", linha);
-        sscanf(linha, "%[^=]", inputValues[i].name);
+        fscanf(input, "%[^\n]%*c", lines);
+        sscanf(lines, "%[^=]", inputValues[i].name);
         int x = 0;
-        while (linha[x++] != '=')
+        while (lines[x++] != '=')
             ;
 
-        while (!('0' <= linha[x] && linha[x] <= '9'))
+        while (!('0' <= lines[x] && lines[x] <= '9'))
         {
             x++;
         }
-        inputValues[i].value = atof(&linha[x]);
+        inputValues[i].value = atof(&lines[x]);
     }
 
     createSimulation(atoi(argv[3])/inputValues[h].value,output);
