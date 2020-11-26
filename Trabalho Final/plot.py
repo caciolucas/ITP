@@ -42,28 +42,3 @@ plt.ylabel('Pessoas')
 plt.title('Grafico SIR')
 plt.legend()
 plt.show()
-
-# s2 = [-1*i for i in s]
-# i2 = [-1*i for i in i]
-# r2 = [-1*i for i in r]
-
-# fig, (ax1, ax2) = plt.subplots(1, 2)
-# fig.suptitle('Horizontally stacked subplots')
-# ax1.plot(t,s, label='S')
-# ax1.plot(t,i, label='I')
-# ax1.plot(t,r, label='R')
-# ax1.set_title('Grafico SIR')
-# ax1.set_xlabel('Horas')
-# ax1.set_ylabel('Pessoas')
-
-# ax2.plot(t,s2, label='S2')
-# ax2.plot(t,i2, label='I2')
-# ax2.plot(t,r2, label='R2')
-# ax2.set_title('Grafico SIR invertido')
-# ax2.set_xlabel('Horas')
-# ax2.set_ylabel('Pessoas')
-
-
-# ax1.legend()
-# ax2.legend()
-# plt.show()
