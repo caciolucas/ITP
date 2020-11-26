@@ -11,6 +11,7 @@
         "regex": "c",
         "utility": "c",
         "valarray": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "*.tcc": "cpp"
     }
 }
