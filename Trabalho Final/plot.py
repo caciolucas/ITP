@@ -1,19 +1,6 @@
-import csv,sys
-import subprocess
-import pip
-
-def import_or_install(package):
-    try:
-        __import__(package)
-    except ImportError:
-        print("Instalando a matplotlib...")
-        print("Não se preocupe, só sera instalada uma vez ;)")    
-        subprocess.call("python -m pip install {} -q".format(package))
-        print("Matplotlib instalada")  
-
-import_or_install('matplotlib')
-
 import matplotlib.pyplot as plt
+import csv,sys
+
 s = []
 i = []
 r = []
