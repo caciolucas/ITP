@@ -33,8 +33,12 @@ class matplotlibSwitchGraphs:
         toolbar.update()
         self.canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
         self.button_switch = Button(
-            self.master, text="Proximo Cenário", command=self.switch_graphs)
+            self.master, text="Proximo Cenário", command=self.next_graph)
         self.button_switch.pack(side=BOTTOM)
+        self.button_switch_before = Button(
+            self.master, text="Voltar Cenário", command=self.previous_graph)
+        self.button_switch_before.pack(side=BOTTOM)
+
 
     def draw_graph_one(self):
         self.ax.clear() 
@@ -107,7 +111,7 @@ class matplotlibSwitchGraphs:
     def _quit(self):
         self.master.quit()  # stops mainloop
 
-    def switch_graphs(self):
+    def next_graph(self):
         self.graphIndex = (self.graphIndex + 1) % 3
         if self.graphIndex == 0:
             self.draw_graph_one()
@@ -115,6 +119,15 @@ class matplotlibSwitchGraphs:
             self.draw_graph_two()
         else:
             self.draw_graph_three()
+
+    def previous_graph(self):
+        self.graphIndex = (self.graphIndex + 1) % 3
+        if self.graphIndex == 0:
+            self.draw_graph_one()
+        elif self.graphIndex == 1:
+            self.draw_graph_three()
+        else:
+            self.draw_graph_two()
 
 
 def import_or_install(package):
