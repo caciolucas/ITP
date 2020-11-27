@@ -46,7 +46,11 @@ typedef struct
 
 item inputValues[8]; ///< Armazena os valores passados através do arquivo de entrada
 
-/// Recebe os valores necessários para calcular o valor da iteração atual de S
+/**
+ * Recebe os valores necessários para calcular o valor da iteração atual de S
+ * @param[in] SLessOne, hNumber, bNumber, ILessOne
+ * @param[out] S
+ */
 double calcS(
   double SLessOne /// Valor de S na posição anterior no vetor S do cenario
 , double hNumber /// Valor de h (intervalo de tempo)
@@ -56,7 +60,12 @@ double calcS(
 {
     return SLessOne - hNumber * bNumber * SLessOne * ILessOne;
 }
-/// Recebe os valores necessários para calcular o valor da iteração atual de I
+
+/**
+ * Recebe os valores necessários para calcular o valor da iteração atual de I
+ * @param[in] ILessOne, hNumber, bNumber, SLessOne, kNumber
+ * @param[out] I
+ */
 double calcI(
   double ILessOne /// Valor de I na posição anterior no vetor I do cenario
 , double hNumber /// Valor dd h (intervalo de tempo)
@@ -67,7 +76,12 @@ double calcI(
 {
     return ILessOne + hNumber * (bNumber * SLessOne * ILessOne - kNumber * ILessOne);
 }
-/// Recebe os valores necessários para calcular o valor da iteração atual de R
+
+/**
+ * Recebe os valores necessários para calcular o valor da iteração atual de R
+ * @param[in] RLessOne, hNumber, kNumber, ILessOne
+ * @param[out] R
+ */
 double calcR(
   double RLessOne /// Valor de R na posição anterior no vetor R do cenario
 , double hNumber /// Valor dd h (intervalo de tempo)
@@ -82,10 +96,9 @@ double calcR(
  * Calcula os valores de b e k, e b2 e k2 (usados respectivamente nos cenários 1 e 2)\n 
  * Percorre os vetores alocados e os preenche os valores calculados usando as funções calcS, calcI e calcR\n 
  * Escreve no arquivo de saída os valores usando os vetores alocados
+ * @param[in] r, *output
  */
-void createSimulation(int t /// Quantidade de iterações
-                      ,FILE *output /// Ponteiro para o arquivo csv de saída
-                      )
+void createSimulation(int t, FILE *output)
 {
     double *cenario0S = malloc(sizeof(double[t]));
     double *cenario0I = malloc(sizeof(double[t]));
@@ -161,6 +174,7 @@ void createSimulation(int t /// Quantidade de iterações
         }
     }
 
+    // Imprime no arquivo os valores dos graficos
     for (int i = 0; i < t; i++)
     {
         cenario0D[i] = cenario0R[i] * 0.02;
@@ -173,12 +187,32 @@ void createSimulation(int t /// Quantidade de iterações
 
 /**
  * Chama o script plot.py passando o nome do arquivo csv de saida como parâmetro 
+ * @param[in] file
  */
-void plotSimulation(char file[]/** Nome do arquivo csv com os dados que serão plotados*/)
-{
+void plotSimulation(char file[]) {
     char command[51];
     sprintf(command, "python3 plot.py %s\n", file);
     system(command);
+}
+
+/**
+ * Le o arquivo txt e armazena na variavel do inputValues
+ * @param[in] input
+ */
+
+void readTxt(FILE *input) {
+    char lines[21];
+    for (int i = 0; i < 15; i++) {
+        fscanf(input, "%[^\n]%*c", lines);
+        sscanf(lines, "%[^=]", inputValues[i].name);
+        int x = 0;
+        while (lines[x++] != '=');
+
+        while (!('0' <= lines[x] && lines[x] <= '9')) {
+            x++;
+        }
+        inputValues[i].value = atof(&lines[x]);
+    }
 }
 
 /**
@@ -188,30 +222,16 @@ void plotSimulation(char file[]/** Nome do arquivo csv com os dados que serão p
  */
 int main(int argc, char *argv[])
 {
+    // Validação da entrada
     if (argc < 4)
     {
         puts("Lembre-se de passar os nomes dos arquivos de entrada e saída e o tempo de simulação");
         return 1;
     }
-    FILE *input = fopen(argv[1], "r");
-    FILE *output = fopen(argv[2], "w");
+    FILE *input = fopen(argv[1], "r"); // Arquivo txt de entrada
+    FILE *output = fopen(argv[2], "w"); // Arquivo csv da saida
 
-    char lines[21];
-    for (int i = 0; i < 15; i++)
-    {
-        fscanf(input, "%[^\n]%*c", lines);
-        sscanf(lines, "%[^=]", inputValues[i].name);
-        int x = 0;
-        while (lines[x++] != '=')
-            ;
-
-        while (!('0' <= lines[x] && lines[x] <= '9'))
-        {
-            x++;
-        }
-        inputValues[i].value = atof(&lines[x]);
-    }
-
+    readTxt(input);
     createSimulation((int)(atof(argv[3]) / inputValues[h].value), output);
     plotSimulation(argv[2]);
 
