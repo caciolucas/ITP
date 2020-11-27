@@ -5,9 +5,6 @@ from tkinter import *
 import matplotlib.pyplot as plt
 import subprocess
 import csv
-# Implement the default Matplotlib key bindings.
-
-# Seperated out config of plot to just do it once
 
 
 def config_plot():
@@ -40,61 +37,77 @@ class matplotlibSwitchGraphs:
         self.button_switch.pack(side=BOTTOM)
 
     def draw_graph_one(self):
-        self.ax.clear()  # clear current axes
-        global c0, t
-        max_y=0
+        self.ax.clear() 
+        global c0, t, styles
+        max_y = 0
         for linha in c0:
-            max_y=max(linha) if max(linha)>max_y else max_y
-            self.ax.plot(t, linha)
+            index = c0.index(linha)
+            max_y = max(linha) if max(linha) > max_y else max_y
+            self.ax.plot(t, linha,
+                         linestyle=styles[index]['linestyle'],
+                         label=styles[index]['label'],
+                         markerfacecolor=styles[index]['facecolor'],
+                         )
         self.ax.grid()
+        self.ax.legend()
         plt.xlim([0, t[-1]])
         plt.ylim([0, max_y+10])
-
 
         self.ax.set(xlabel='Tempo (h)', ylabel='Pessoas',
                     title='Cenário 0 (Padrão)')
         self.canvas.draw()
 
     def draw_graph_two(self):
-        self.ax.clear()  # clear current axes
-        global c1, t
-        max_y=0
+        self.ax.clear()
+        global c1, t, styles
+        max_y = 0
         for linha in c1:
-            max_y=max(linha) if max(linha)>max_y else max_y
-            self.ax.plot(t, linha)
+            index = c1.index(linha)
+            max_y = max(linha) if max(linha) > max_y else max_y
+            self.ax.plot(t, linha,
+                         linestyle=styles[index]['linestyle'],
+                         label=styles[index]['label'],
+                         markerfacecolor=styles[index]['facecolor'],
+                         )
         self.ax.grid()
+        self.ax.legend()
         plt.xlim([0, t[-1]])
         plt.ylim([0, max_y+10])
-
 
         self.ax.set(xlabel='Tempo (h)', ylabel='Pessoas',
                     title="Cenário 1 (Maior Tempo de Contaminação 'T_b')")
         self.canvas.draw()
 
     def draw_graph_three(self):
-        self.ax.clear()  # clear current axes
-        global c2, t
-        max_y=0
+        self.ax.clear() 
+        global c2, t, styles
+        max_y = 0
+
         for linha in c2:
-            max_y=max(linha) if max(linha)>max_y else max_y
-            self.ax.plot(t, linha)
+            index = c2.index(linha)
+            max_y = max(linha) if max(linha) > max_y else max_y
+            self.ax.plot(t, linha,
+                         linestyle=styles[index]['linestyle'],
+                         label=styles[index]['label'],
+                         markerfacecolor=styles[index]['facecolor'],
+                         )
+
         self.ax.grid()
+        self.ax.legend()
         plt.xlim([0, t[-1]])
         plt.ylim([0, max_y+10])
 
         self.ax.set(xlabel='Tempo (h)', ylabel='Pessoas',
-                    title="Cenário 2 (Menor Tempo de Recuperação 'T_b')")
+                    title="Cenário 2 (Menor Tempo de Recuperação 'T_k)")
         self.canvas.draw()
 
     def on_key_press(self, event):
-        # print("you pressed {}".format(event.key))
         key_press_handler(event, self.canvas)
 
     def _quit(self):
         self.master.quit()  # stops mainloop
 
     def switch_graphs(self):
-        # Need to call the correct draw, whether we're on graph one or two
         self.graphIndex = (self.graphIndex + 1) % 3
         if self.graphIndex == 0:
             self.draw_graph_one()
@@ -118,6 +131,15 @@ def main():
     import_or_install('matplotlib')
     import matplotlib
     matplotlib.use("TkAgg")
+
+    global styles
+    styles = [
+        {'label': 'Sucetiveis', 'facecolor': 'g', 'linestyle': '-'},
+        {'label': 'Infectados', 'facecolor': '#FF8C00', 'linestyle': '-.'},
+        {'label': 'Removidos', 'facecolor': 'r', 'linestyle': ':'},
+        {'label': 'Mortos', 'facecolor': 'k', 'linestyle': '--'}
+    ]
+
     s0 = []
     i0 = []
     r0 = []

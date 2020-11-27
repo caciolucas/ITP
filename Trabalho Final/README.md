@@ -1,5 +1,13 @@
 
-# Informações importantes
+# Informações Importantes
+
+## Requerimentos
+
+Para execução do programa é requerido somente a instalação do Python 3, as demais instações de bibliotecas serão feitas se necessárias
+
+Você pode baixar o Python 3 aqui:
+
+https://www.python.org/downloads/
 
 ## Como executar o script
 
@@ -93,3 +101,5 @@ Lembre-se de que `seuarquivo.csv` deve ter o seguinte cabeçalho:
 Cenario 0 S(t),Cenario 0 I(t),Cenario 0 R(t),Cenario 0 D(t),Cenario 1 S(t),Cenario 1 I(t),Cenario 1 R(t), Cenario 1 D(t),Cenario 2 S(t),Cenario 2 I(t),Cenario 2 R(t),Cenario 2 D(t),tempo(t)
 
 ```
+
+Portanto é recomendado uso do programa main.exe pois este já fará todo o processo automaticamente.
