@@ -24,5 +24,6 @@ var main_8c =
     [ "createSimulation", "main_8c.html#a43f4e2765b621838b479fb197cbbbb28", null ],
     [ "main", "main_8c.html#a0ddf1224851353fc92bfbff6f499fa97", null ],
     [ "plotSimulation", "main_8c.html#affb06b94df555205153dee7ba2ad1c25", null ],
+    [ "readTxt", "main_8c.html#ae392c86f6d0cf4e1848c0a7a4c45ad09", null ],
     [ "inputValues", "main_8c.html#a507ae3b5829eed7a62b5718bf9315286", null ]
 ];

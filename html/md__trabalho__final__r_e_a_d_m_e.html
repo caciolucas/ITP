@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Simulação Epidemiológica: Informações importantes</title>
+<title>Simulação Epidemiológica: Informações Importantes</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,17 +82,22 @@ $(document).ready(function(){initNavTree('md__trabalho__final__r_e_a_d_m_e.html'
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Informações importantes </div>  </div>
+<div class="title">Informações Importantes </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="autotoc_md1"></a>
+Requerimentos</h1>
+<p>Para execução do programa é requerido somente a instalação do Python 3, as demais instações de bibliotecas serão feitas se necessárias</p>
+<p>Você pode baixar o Python 3 aqui:</p>
+<p><a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></p>
+<h1><a class="anchor" id="autotoc_md2"></a>
 Como executar o script</h1>
-<h2><a class="anchor" id="autotoc_md2"></a>
+<h2><a class="anchor" id="autotoc_md3"></a>
 Compilação</h2>
 <p>Inicialmente, compile-o em sua máquina, como no exemplo abaixo:</p>
 <div class="fragment"><div class="line">gcc main.c -o main</div>
 </div><!-- fragment --><p>Em seguida execute o arquivo compilado passando como argumentos, respectivamente, o arquivo de entrada com os parâmetros do caso analisado, o nome do arquivo de saída que deverá ser gerado, e a quantidade de horas da simulação, por exemplo:</p>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Execução</h2>
 <div class="fragment"><div class="line">main entrada.txt output.csv 500</div>
 </div><!-- fragment --><p>Neste caso:</p>
@@ -101,7 +106,7 @@ Execução</h2>
 <li><code>output.csv</code> (é o arquivo de saída que deverá ser criado);</li>
 <li><code>500</code> (é a quantidade de horas que a simulação terá);</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md5"></a>
 Arquivo de entrada</h1>
 <p>O arquivo de entrada deverá ser um arquivo de texto seguindo o formato a seguir:</p>
 <div class="fragment"><div class="line">S(0)=[valor]</div>
@@ -135,16 +140,16 @@ Arquivo de entrada</h1>
 <div class="line">T_b2=48</div>
 <div class="line">tempo_T_k2=250</div>
 <div class="line">T_k2=12</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
 Plotagem dos dados</h1>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md7"></a>
 Chamada automática</h2>
 <p>Logo após o cálculo da simulação, o próprio programa irá executar o script Python de plotagem. O script por sua vez, verifica se você tem a biblioteca necessária instalada, se não a tiver, instala usando o parâmetro <code>-q</code> para que não haja um despejo de informações desnecessárias no seu terminal.</p>
 <p>A chamada do script Python é feita da seguinte forma:</p>
 <div class="fragment"><div class="line">system(&quot;python plot.py [arquivodesaida]\n&quot;);</div>
 </div><!-- fragment --><p>Onde <code>arquivodesaida</code> é o nome do arquivo passado inicialmente como parâmetro (nos nossos exemplos, <code>output.csv</code>).</p>
 <p>Em resumo, você não precisa fazer nada além de rodar o programa compilado e passar o nome do arquivo de entrada, o de saída e a quantidade de horas simuladas, o programa irá chamar os demais scripts necessários de forma completamente automática.</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md8"></a>
 Chamada manual</h2>
 <p>No entanto, caso queira gerar a partir de um <code>.csv</code> diferente, você pode chamar o script manualmente usando</p>
 <div class="fragment"><div class="line">python plot.py [seuarquivo].csv</div>
@@ -152,7 +157,8 @@ Chamada manual</h2>
 <div class="line"> </div>
 <div class="line">Lembre-se de que `seuarquivo.csv` deve ter o seguinte cabeçalho:</div>
 </div><!-- fragment --><p>Cenario 0 S(t),Cenario 0 I(t),Cenario 0 R(t),Cenario 0 D(t),Cenario 1 S(t),Cenario 1 I(t),Cenario 1 R(t), Cenario 1 D(t),Cenario 2 S(t),Cenario 2 I(t),Cenario 2 R(t),Cenario 2 D(t),tempo(t)</p>
-<p>``` </p>
+<p>```</p>
+<p>Portanto é recomendado uso do programa main.exe pois este já fará todo o processo automaticamente. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

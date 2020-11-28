@@ -131,18 +131,17 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a482f299b92346fdf037b0d0740df580e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a482f299b92346fdf037b0d0740df580e">calcS</a> (double SLessOne, double hNumber, double bNumber, double ILessOne)</td></tr>
-<tr class="memdesc:a482f299b92346fdf037b0d0740df580e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recebe os valores necessários para calcular o valor da iteração atual de S.  <a href="main_8c.html#a482f299b92346fdf037b0d0740df580e">More...</a><br /></td></tr>
 <tr class="separator:a482f299b92346fdf037b0d0740df580e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3dcb9e9588535c876ebb02b7ddd0658d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a3dcb9e9588535c876ebb02b7ddd0658d">calcI</a> (double ILessOne, double hNumber, double bNumber, double SLessOne, double kNumber)</td></tr>
-<tr class="memdesc:a3dcb9e9588535c876ebb02b7ddd0658d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recebe os valores necessários para calcular o valor da iteração atual de I.  <a href="main_8c.html#a3dcb9e9588535c876ebb02b7ddd0658d">More...</a><br /></td></tr>
 <tr class="separator:a3dcb9e9588535c876ebb02b7ddd0658d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ef25d7f48e6d62830710dcb2b97e939"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a1ef25d7f48e6d62830710dcb2b97e939">calcR</a> (double RLessOne, double hNumber, double kNumber, double ILessOne)</td></tr>
-<tr class="memdesc:a1ef25d7f48e6d62830710dcb2b97e939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recebe os valores necessários para calcular o valor da iteração atual de R.  <a href="main_8c.html#a1ef25d7f48e6d62830710dcb2b97e939">More...</a><br /></td></tr>
 <tr class="separator:a1ef25d7f48e6d62830710dcb2b97e939"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43f4e2765b621838b479fb197cbbbb28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a43f4e2765b621838b479fb197cbbbb28">createSimulation</a> (int t, FILE *output)</td></tr>
 <tr class="separator:a43f4e2765b621838b479fb197cbbbb28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:affb06b94df555205153dee7ba2ad1c25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#affb06b94df555205153dee7ba2ad1c25">plotSimulation</a> (char file[])</td></tr>
 <tr class="separator:affb06b94df555205153dee7ba2ad1c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae392c86f6d0cf4e1848c0a7a4c45ad09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae392c86f6d0cf4e1848c0a7a4c45ad09">readTxt</a> (FILE *input)</td></tr>
+<tr class="separator:ae392c86f6d0cf4e1848c0a7a4c45ad09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -247,8 +246,13 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Recebe os valores necessários para calcular o valor da iteração atual de I. </p>
+<p>Recebe os valores necessários para calcular o valor da iteração atual de I </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ILessOne,hNumber,bNumber,SLessOne,kNumber</td><td></td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">I</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ILessOne</td><td>Valor de I na posição anterior no vetor I do cenario </td></tr>
@@ -260,7 +264,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00060">60</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00069">69</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -301,8 +305,13 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Recebe os valores necessários para calcular o valor da iteração atual de R. </p>
+<p>Recebe os valores necessários para calcular o valor da iteração atual de R </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">RLessOne,hNumber,kNumber,ILessOne</td><td></td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">R</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">RLessOne</td><td>Valor de R na posição anterior no vetor R do cenario </td></tr>
@@ -313,7 +322,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00071">71</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00085">85</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -354,8 +363,13 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Recebe os valores necessários para calcular o valor da iteração atual de S. </p>
+<p>Recebe os valores necessários para calcular o valor da iteração atual de S </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">SLessOne,hNumber,bNumber,ILessOne</td><td></td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">S</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">SLessOne</td><td>Valor de S na posição anterior no vetor S do cenario </td></tr>
@@ -366,7 +380,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00050">50</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00054">54</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -398,16 +412,14 @@ Variables</h2></td></tr>
 <p>Aloca dinâmicamente 12 vetores (4 para cada cenário)<br  />
  Calcula os valores de b e k, e b2 e k2 (usados respectivamente nos cenários 1 e 2)<br  />
  Percorre os vetores alocados e os preenche os valores calculados usando as funções calcS, calcI e calcR<br  />
- Escreve no arquivo de saída os valores usando os vetores alocados </p>
-<dl class="params"><dt>Parameters</dt><dd>
+ Escreve no arquivo de saída os valores usando os vetores alocados </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">t</td><td>Quantidade de iterações </td></tr>
-    <tr><td class="paramname">output</td><td>Ponteiro para o arquivo csv de saída </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">r,*output</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00086">86</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00101">101</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -440,7 +452,7 @@ Variables</h2></td></tr>
 </p>
 <p>Lê os parâmetros passados no arquivo de entrada e os armazena num vetor de <code>item</code> </p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00189">189</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00223">223</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -459,15 +471,40 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Chama o script plot.py passando o nome do arquivo csv de saida como parâmetro </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Chama o script plot.py passando o nome do arquivo csv de saida como parâmetro </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">file</td><td>Nome do arquivo csv com os dados que serão plotados </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00177">177</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00192">192</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+
+</div>
+</div>
+<a id="ae392c86f6d0cf4e1848c0a7a4c45ad09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae392c86f6d0cf4e1848c0a7a4c45ad09">&#9670;&nbsp;</a></span>readTxt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void readTxt </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>input</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Le o arquivo txt e armazena na variavel do inputValues </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00203">203</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>

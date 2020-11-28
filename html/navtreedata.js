@@ -25,15 +25,16 @@
 var NAVTREE =
 [
   [ "Simulação Epidemiológica", "index.html", [
-    [ "Informações importantes", "md__trabalho__final__r_e_a_d_m_e.html", [
-      [ "Como executar o script", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md1", [
-        [ "Compilação", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md2", null ],
-        [ "Execução", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md3", null ]
+    [ "Informações Importantes", "md__trabalho__final__r_e_a_d_m_e.html", [
+      [ "Requerimentos", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md1", null ],
+      [ "Como executar o script", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md2", [
+        [ "Compilação", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md3", null ],
+        [ "Execução", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md4", null ]
       ] ],
-      [ "Arquivo de entrada", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md4", null ],
-      [ "Plotagem dos dados", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md5", [
-        [ "Chamada automática", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md6", null ],
-        [ "Chamada manual", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md7", null ]
+      [ "Arquivo de entrada", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md5", null ],
+      [ "Plotagem dos dados", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md6", [
+        [ "Chamada automática", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md7", null ],
+        [ "Chamada manual", "md__trabalho__final__r_e_a_d_m_e.html#autotoc_md8", null ]
       ] ]
     ] ],
     [ "Data Structures", "annotated.html", [
