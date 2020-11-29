@@ -1,34 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "simulation.c"
+#include "simulation.h"
 
-double calcB(double n_bNumber, double T_bNumber, double S_b0Number, double I_b0Number)
-{
-    return n_bNumber / (T_bNumber * S_b0Number * I_b0Number);
-}
 
-double calcK(double m_kNumber, double n_kNumber, double T_kNumber)
-{
-    return m_kNumber / (n_kNumber * T_kNumber);
-}
-double calcS(
-    double SLessOne, double hNumber, double bNumber, double ILessOne)
-{
-    return SLessOne - hNumber * bNumber * SLessOne * ILessOne;
-}
-
-double calcI(
-    double ILessOne, double hNumber, double bNumber, double SLessOne, double kNumber)
-{
-    return ILessOne + hNumber * (bNumber * SLessOne * ILessOne - kNumber * ILessOne);
-}
-
-double calcR(
-    double RLessOne, double hNumber, double kNumber, double ILessOne)
-{
-    return RLessOne + hNumber * kNumber * ILessOne;
-}
 
 void allocCenario(double *cenario[], int t, int n)
 {
@@ -129,30 +104,7 @@ void simulateCenario(double *cenario[], int t, int cenarioN, double b, double b2
         }
     }
 }
-void writeCenarios(double ***cenarios, FILE *outputFile, int t)
-{
 
-    fprintf(outputFile, "Cenario 0 S(t),Cenario 0 I(t),Cenario 0 R(t),Cenario 0 D(t),");
-    fprintf(outputFile, "Cenario 1 S(t),Cenario 1 I(t),Cenario 1 R(t),Cenario 1 D(t),");
-    fprintf(outputFile, "Cenario 2 S(t),Cenario 2 I(t),Cenario 2 R(t),Cenario 2 D(t),");
-    fprintf(outputFile, "tempo(t)\n");
-    for (int j = 0; j < t; j++)
-    {
-        fprintf(outputFile, "%014.10lf,%014.10lf,%014.10lf,%014.10lf,", cenarios[0][S][j],
-                cenarios[0][I][j],
-                cenarios[0][R][j],
-                cenarios[0][D][j]);
-        fprintf(outputFile, "%014.10lf,%014.10lf,%014.10lf,%014.10lf,", cenarios[1][S][j],
-                cenarios[1][I][j],
-                cenarios[1][R][j],
-                cenarios[1][D][j]);
-        fprintf(outputFile, "%014.10lf,%014.10lf,%014.10lf,%014.10lf,", cenarios[2][S][j],
-                cenarios[2][I][j],
-                cenarios[2][R][j],
-                cenarios[2][D][j]);
-        fprintf(outputFile, "%08.4lf\n", j * inputValues[h].value);
-    }
-}
 
 void createSimulation(int t, FILE *output, char outputFileName[])
 {
@@ -191,33 +143,9 @@ void createSimulation(int t, FILE *output, char outputFileName[])
     puts("Arquivo salvo e fechado");
 }
 
-void plotSimulation(char file[])
-{
-    char command[51];
-    sprintf(command, "python plot.py %s \n", file);
-    puts("Plotando os graficos =============================");
-    puts("Aperte ESC ou feche a janela para encerrar =======");
-    system(command);
-}
 
-void readTxt(FILE *input)
-{
-    char lines[21];
-    for (int i = 0; i < 15; i++)
-    {
-        fscanf(input, "%[^\n]%*c", lines);
-        sscanf(lines, "%[^=]", inputValues[i].name);
-        int x = 0;
-        while (lines[x++] != '=')
-            ;
 
-        while (!('0' <= lines[x] && lines[x] <= '9'))
-        {
-            x++;
-        }
-        inputValues[i].value = atof(&lines[x]);
-    }
-}
+
 
 /**
  * Recebe como parâmetro os nomes dos arquivos de entrada e saída e o tempo t da simulação em horas\n 
