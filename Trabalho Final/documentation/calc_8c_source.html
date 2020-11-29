@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.20"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Simulação Epidemiológica: Código-Fonte de calc.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Simulação Epidemiológica
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.20 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Localizar');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('calc_8c_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">calc.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="calc_8c.html">Ir para a documentação deste ficheiro.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">double</span> <a class="code" href="calc_8c.html#a482f299b92346fdf037b0d0740df580e">calcS</a>(</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordtype">double</span> SLessOne,</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">double</span> hNumber,</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">double</span> bNumber,</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">double</span> ILessOne);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">double</span> <a class="code" href="calc_8c.html#a3dcb9e9588535c876ebb02b7ddd0658d">calcI</a>(</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">double</span> ILessOne,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">double</span> hNumber,</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">double</span> bNumber,</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">double</span> SLessOne,</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">double</span> kNumber);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">double</span> <a class="code" href="calc_8c.html#a1ef25d7f48e6d62830710dcb2b97e939">calcR</a>(</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">double</span> RLessOne,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">double</span> hNumber,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">double</span> kNumber,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">double</span> ILessOne);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="calc_8c.html#a37d48401ecfb0bf535fa2108fc1e8178">   58</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="calc_8c.html#a37d48401ecfb0bf535fa2108fc1e8178">calcB</a>(</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">double</span> n_bNumber,</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">double</span> T_bNumber,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="types_8h.html#a3b59c525a80c89e04f6e36951502eeaaaf0715feb59b2315b4656c64e606fd033">S_b0</a>,</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="types_8h.html#a3b59c525a80c89e04f6e36951502eeaaacb99a6a7c7effad6ca2ee10d63e35d5c">I_b0</a>);</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="calc_8c.html#aaae1efe19631929105ee5ed88a770066">   69</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="calc_8c.html#aaae1efe19631929105ee5ed88a770066">calcK</a>(</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">double</span> m_kNumber,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">double</span> n_kNumber,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">double</span> T_kNumber);</div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<div class="ttc" id="atypes_8h_html_a3b59c525a80c89e04f6e36951502eeaaacb99a6a7c7effad6ca2ee10d63e35d5c"><div class="ttname"><a href="types_8h.html#a3b59c525a80c89e04f6e36951502eeaaacb99a6a7c7effad6ca2ee10d63e35d5c">I_b0</a></div><div class="ttdeci">@ I_b0</div><div class="ttdoc">7</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00045">types.h:44</a></div></div>
+<div class="ttc" id="acalc_8c_html_a37d48401ecfb0bf535fa2108fc1e8178"><div class="ttname"><a href="calc_8c.html#a37d48401ecfb0bf535fa2108fc1e8178">calcB</a></div><div class="ttdeci">double calcB(double n_bNumber, double T_bNumber, double S_b0, double I_b0)</div></div>
+<div class="ttc" id="acalc_8c_html_a3dcb9e9588535c876ebb02b7ddd0658d"><div class="ttname"><a href="calc_8c.html#a3dcb9e9588535c876ebb02b7ddd0658d">calcI</a></div><div class="ttdeci">double calcI(double ILessOne, double hNumber, double bNumber, double SLessOne, double kNumber)</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00015">main.c:15</a></div></div>
+<div class="ttc" id="acalc_8c_html_a482f299b92346fdf037b0d0740df580e"><div class="ttname"><a href="calc_8c.html#a482f299b92346fdf037b0d0740df580e">calcS</a></div><div class="ttdeci">double calcS(double SLessOne, double hNumber, double bNumber, double ILessOne)</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00009">main.c:9</a></div></div>
+<div class="ttc" id="atypes_8h_html_a3b59c525a80c89e04f6e36951502eeaaaf0715feb59b2315b4656c64e606fd033"><div class="ttname"><a href="types_8h.html#a3b59c525a80c89e04f6e36951502eeaaaf0715feb59b2315b4656c64e606fd033">S_b0</a></div><div class="ttdeci">@ S_b0</div><div class="ttdoc">6</div><div class="ttdef"><b>Definition:</b> <a href="types_8h_source.html#l00043">types.h:42</a></div></div>
+<div class="ttc" id="acalc_8c_html_a1ef25d7f48e6d62830710dcb2b97e939"><div class="ttname"><a href="calc_8c.html#a1ef25d7f48e6d62830710dcb2b97e939">calcR</a></div><div class="ttdeci">double calcR(double RLessOne, double hNumber, double kNumber, double ILessOne)</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00021">main.c:21</a></div></div>
+<div class="ttc" id="acalc_8c_html_aaae1efe19631929105ee5ed88a770066"><div class="ttname"><a href="calc_8c.html#aaae1efe19631929105ee5ed88a770066">calcK</a></div><div class="ttdeci">double calcK(double m_kNumber, double n_kNumber, double T_kNumber)</div></div>
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="calc_8c.html">calc.c</a></li>
+    <li class="footer">Gerado por <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+  </ul>
+</div>
+</body>
+</html>

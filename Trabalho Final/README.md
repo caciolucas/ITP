@@ -93,13 +93,13 @@ No entanto, caso queira gerar a partir de um `.csv` diferente, você pode chamar
 
 ```
 python plot.py [seuarquivo].csv
-````
-
-Lembre-se de que `seuarquivo.csv` deve ter o seguinte cabeçalho:
-
-```
-Cenario 0 S(t),Cenario 0 I(t),Cenario 0 R(t),Cenario 0 D(t),Cenario 1 S(t),Cenario 1 I(t),Cenario 1 R(t), Cenario 1 D(t),Cenario 2 S(t),Cenario 2 I(t),Cenario 2 R(t),Cenario 2 D(t),tempo(t)
-
 ```
 
-Portanto é recomendado uso do programa main.exe pois este já fará todo o processo automaticamente.
+Lembre-se de que `seuarquivo.csv` deve ter um cabeçalho semelhante:
+
+```
+Cenario 0 S(t),Cenario 0 I(t),Cenario 0 R(t),Cenario 0 D(t),Cenario 1 S(t),Cenario 1 I(t),Cenario 1 R(t),Cenario 1 D(t),Cenario 2 S(t),Cenario 2 I(t),Cenario 2 R(t),Cenario 2 D(t),tempo(t)
+
+```
+
+Portanto é recomendado uso do programa compilado pois este já fará todo o processo automaticamente.

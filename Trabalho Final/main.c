@@ -1,214 +1,218 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "simulation.c"
 
-// #define S0 0          ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define I0 1          ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define R0 2          ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define h 3           ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define N_b 4         ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define T_b 5         ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define S_b0 6        ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define I_b0 7        ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define m_k 8         ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define n_k 9         ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define T_k 10        ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define tempo_T_b2 11 ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define T_b2 12       ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define tempo_T_k2 13 ///< Macro definindo posição do parâmetro no vetor inputValues
-// #define T_k2 14       ///< Macro definindo posição do parâmetro no vetor inputValues
-
-/// Enum que relaciona o nome do parâmetro à sua posição no array inputValues
-enum paramIndex {
-S0 /// 0
-,I0 /// 1
-,R0 /// 2
-,h /// 3
-,N_b /// 4 
-,T_b /// 5
-,S_b0 /// 6
-,I_b0 /// 7
-,m_k /// 8
-,n_k /// 9
-,T_k /// 10
-,tempo_T_b2 /// 11
-,T_b2 ///  12
-,tempo_T_k2 /// 13
-,T_k2 /// 14
-};
-
-/// Struct que guarda o nome do parâmetro e o valor respectivo
-typedef struct
+double calcB(double n_bNumber, double T_bNumber, double S_b0Number, double I_b0Number)
 {
-    double value;  ///< Valor do parâmetro
-    char name[20]; ///< Nome do parâmetro
-} item;
+    return n_bNumber / (T_bNumber * S_b0Number * I_b0Number);
+}
 
-item inputValues[8]; ///< Armazena os valores passados através do arquivo de entrada
-
-/**
- * Recebe os valores necessários para calcular o valor da iteração atual de S
- * @param[in] SLessOne, hNumber, bNumber, ILessOne
- * @param[out] S
- */
+double calcK(double m_kNumber, double n_kNumber, double T_kNumber)
+{
+    return m_kNumber / (n_kNumber * T_kNumber);
+}
 double calcS(
-  double SLessOne /// Valor de S na posição anterior no vetor S do cenario
-, double hNumber /// Valor de h (intervalo de tempo)
-, double bNumber /// Valor de b (facilidade de contágio de um indivíduo)
-, double ILessOne /// Valor de I na posição anterior no vetor I do cenario
-)
+    double SLessOne, double hNumber, double bNumber, double ILessOne)
 {
     return SLessOne - hNumber * bNumber * SLessOne * ILessOne;
 }
 
-/**
- * Recebe os valores necessários para calcular o valor da iteração atual de I
- * @param[in] ILessOne, hNumber, bNumber, SLessOne, kNumber
- * @param[out] I
- */
 double calcI(
-  double ILessOne /// Valor de I na posição anterior no vetor I do cenario
-, double hNumber /// Valor dd h (intervalo de tempo)
-, double bNumber /// Valor de bfacilidade de contágio de um indivíduo
-, double SLessOne /// Valor de S na posição anterior no vetor S do cenario
-, double kNumber /// Valor de k (probabilidade que um indivíduo se recupere)
-    )
+    double ILessOne, double hNumber, double bNumber, double SLessOne, double kNumber)
 {
     return ILessOne + hNumber * (bNumber * SLessOne * ILessOne - kNumber * ILessOne);
 }
 
-/**
- * Recebe os valores necessários para calcular o valor da iteração atual de R
- * @param[in] RLessOne, hNumber, kNumber, ILessOne
- * @param[out] R
- */
 double calcR(
-  double RLessOne /// Valor de R na posição anterior no vetor R do cenario
-, double hNumber /// Valor dd h (intervalo de tempo)
-, double kNumber /// Valor de k (probabilidade que um indivíduo se recupere)
-, double ILessOne /// Valor de I na posição anterior no vetor I do cenario
-    )
+    double RLessOne, double hNumber, double kNumber, double ILessOne)
 {
     return RLessOne + hNumber * kNumber * ILessOne;
 }
-/**
- *  Aloca dinâmicamente 12 vetores (4 para cada cenário)\n 
- * Calcula os valores de b e k, e b2 e k2 (usados respectivamente nos cenários 1 e 2)\n 
- * Percorre os vetores alocados e os preenche os valores calculados usando as funções calcS, calcI e calcR\n 
- * Escreve no arquivo de saída os valores usando os vetores alocados
- * @param[in] r, *output
- */
-void createSimulation(int t, FILE *output)
+
+void allocCenario(double *cenario[], int t, int n)
 {
-    double *cenario0S = malloc(sizeof(double[t]));
-    double *cenario0I = malloc(sizeof(double[t]));
-    double *cenario0R = malloc(sizeof(double[t]));
-    double *cenario0D = malloc(sizeof(double[t]));
-
-    double *cenario1S = malloc(sizeof(double[t]));
-    double *cenario1I = malloc(sizeof(double[t]));
-    double *cenario1R = malloc(sizeof(double[t]));
-    double *cenario1D = malloc(sizeof(double[t]));
-
-    double *cenario2S = malloc(sizeof(double[t]));
-    double *cenario2I = malloc(sizeof(double[t]));
-    double *cenario2R = malloc(sizeof(double[t]));
-    double *cenario2D = malloc(sizeof(double[t]));
-
-    double k = inputValues[m_k].value / (inputValues[n_k].value * inputValues[T_k].value);
-    double b = inputValues[N_b].value / (inputValues[T_b].value * inputValues[S_b0].value * inputValues[I_b0].value);
-
-    double b2 = inputValues[N_b].value / (inputValues[T_b2].value * inputValues[S_b0].value * inputValues[I_b0].value);
-    double k2 = inputValues[m_k].value / (inputValues[n_k].value * inputValues[T_k2].value);
-
-    cenario0S[0] = inputValues[S0].value;
-    cenario0I[0] = inputValues[I0].value;
-    cenario0R[0] = inputValues[R0].value;
-
-    fprintf(output, "Cenario 0 S(t),Cenario 0 I(t),Cenario 0 R(t),Cenario 0 D(t),Cenario 1 S(t),Cenario 1 I(t),Cenario 1 R(t), Cenario 1 D(t),Cenario 2 S(t),Cenario 2 I(t),Cenario 2 R(t),Cenario 2 D(t),tempo(t)\n");
-    for (int i = 1; i < t; i++)
+    char c;
+    for (int i = 0; i < 4; i++)
     {
-        // CENARIO 0 PADRAO
-        // cenario0S[i] = cenario0S[i - 1] - inputValues[h].value * b * cenario0S[i - 1] * cenario0I[i - 1];
-        // cenario0I[i] = cenario0I[i - 1] + inputValues[h].value * (b * cenario0S[i - 1] * cenario0I[i - 1] - k * cenario0I[i - 1]);
-        // cenario0R[i] = cenario0R[i - 1] + inputValues[h].value * k * cenario0I[i - 1];
-        cenario0S[i] = calcS(cenario0S[i - 1], inputValues[h].value, b, cenario0I[i - 1]);
-        cenario0I[i] = calcI(cenario0I[i - 1], inputValues[h].value, b, cenario0S[i - 1], k);
-        cenario0R[i] = calcR(cenario0R[i - 1], inputValues[h].value, k, cenario0I[i - 1]);
-
-        // Se chegou no tempo de usar o novo tb_2, os valores nos vetores vão ser calculados usando ele
-        if (i >= inputValues[tempo_T_b2].value / inputValues[h].value)
+        switch (i)
         {
-            // CENARIO 1 (CALCULO COM NOVO T_b)
-            // cenario1S[i] = cenario1S[i - 1] - inputValues[h].value * b2 * cenario1S[i - 1] * cenario1I[i - 1];
-            // cenario1I[i] = cenario1I[i - 1] + inputValues[h].value * (b2 * cenario1S[i - 1] * cenario1I[i - 1] - k * cenario1I[i - 1]);
-            // cenario1R[i] = cenario1R[i - 1] + inputValues[h].value * k * cenario1I[i - 1];
-            cenario1S[i] = calcS(cenario1S[i - 1], inputValues[h].value, b2, cenario1I[i - 1]);
-            cenario1I[i] = calcI(cenario1I[i - 1], inputValues[h].value, b2, cenario1S[i - 1], k);
-            cenario1R[i] = calcR(cenario1R[i - 1], inputValues[h].value, k, cenario1I[i - 1]);
+        case 0:
+            c = 'S';
+            break;
+        case 1:
+            c = 'I';
+            break;
+        case 2:
+            c = 'R';
+            break;
+        case 3:
+            c = 'D';
+            break;
         }
-        // Se não, vai ser igual ao do cenário padrão
+        cenario[i] = malloc(sizeof(double[t]));
+        if (cenario[i] == NULL)
+        {
+            printf("Erro na alocacao de espaco do cenario %d %c\n", n, c);
+        }
         else
         {
-            cenario1S[i] = cenario0S[i];
-            cenario1I[i] = cenario0I[i];
-            cenario1R[i] = cenario0R[i];
-        }
-        // Se chegou no tempo de usar o novo tk_2, os valores nos vetores vão ser calculados usando ele
-        if (i >= inputValues[tempo_T_k2].value / inputValues[h].value)
-        {
-            // CENARIO 2 (CALCULO COM NOVO T_k)
-            // cenario2S[i] = cenario2S[i - 1] - inputValues[h].value * b * cenario2S[i - 1] * cenario2I[i - 1];
-            // cenario2I[i] = cenario2I[i - 1] + inputValues[h].value * (b * cenario2S[i - 1] * cenario2I[i - 1] - k2 * cenario2I[i - 1]);
-            // cenario2R[i] = cenario2R[i - 1] + inputValues[h].value * k2 * cenario2I[i - 1];
-            cenario2S[i] = calcS(cenario2S[i - 1], inputValues[h].value, b, cenario2I[i - 1]);
-            cenario2I[i] = calcI(cenario2I[i - 1], inputValues[h].value, b, cenario2S[i - 1], k2);
-            cenario2R[i] = calcR(cenario2R[i - 1], inputValues[h].value, k2, cenario2I[i - 1]);
-        }
-        // Se não, vai ser igual ao do cenário padrão
-        else
-        {
-            cenario2S[i] = cenario0S[i];
-            cenario2I[i] = cenario0I[i];
-            cenario2R[i] = cenario0R[i];
+            printf("Cenario %d %c alocado corretamente\n", n, c);
         }
     }
-
-    // Imprime no arquivo os valores dos graficos
-    for (int i = 0; i < t; i++)
-    {
-        cenario0D[i] = cenario0R[i] * 0.02;
-        cenario1D[i] = cenario1R[i] * 0.02;
-        cenario2D[i] = cenario2R[i] * 0.02;
-        fprintf(output, "%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n", cenario0S[i], cenario0I[i], cenario0R[i], cenario0D[i], cenario1S[i], cenario1I[i], cenario1R[i], cenario1D[i], cenario2S[i], cenario2I[i], cenario2R[i], cenario2D[i], i * inputValues[h].value);
-    }
-    fclose(output);
 }
 
-/**
- * Chama o script plot.py passando o nome do arquivo csv de saida como parâmetro 
- * @param[in] file
- */
-void plotSimulation(char file[]) {
+void simulateCenario(double *cenario[], int t, int cenarioN, double b, double b2, double k, double k2)
+{
+    if (cenarioN == 0)
+    {
+        cenario[S][0] = inputValues[S0].value;
+        cenario[I][0] = inputValues[I0].value;
+        cenario[R][0] = inputValues[R0].value;
+        cenario[D][0] = cenario[R][0] * 0.02;
+        for (int i = 1; i < t; i++)
+        {
+            cenario[S][i] = calcS(cenario[S][i - 1], inputValues[h].value, b, cenario[I][i - 1]);
+            cenario[I][i] = calcI(cenario[I][i - 1], inputValues[h].value, b, cenario[S][i - 1], k);
+            cenario[R][i] = calcR(cenario[R][i - 1], inputValues[h].value, k, cenario[I][i - 1]);
+            cenario[D][i] = cenario[R][i] * 0.02;
+        }
+    }
+    if (cenarioN == 1)
+    {
+        cenario[S][0] = inputValues[S0].value;
+        cenario[I][0] = inputValues[I0].value;
+        cenario[R][0] = inputValues[R0].value;
+        cenario[D][0] = cenario[R][0] * 0.02;
+        for (int i = 1; i < t; i++)
+        {
+
+            if (i >= inputValues[tempo_T_b2].value / inputValues[h].value)
+            {
+
+                cenario[S][i] = calcS(cenario[S][i - 1], inputValues[h].value, b2, cenario[I][i - 1]);
+                cenario[I][i] = calcI(cenario[I][i - 1], inputValues[h].value, b2, cenario[S][i - 1], k);
+                cenario[R][i] = calcR(cenario[R][i - 1], inputValues[h].value, k, cenario[I][i - 1]);
+            }
+            else
+            {
+                cenario[S][i] = calcS(cenario[S][i - 1], inputValues[h].value, b, cenario[I][i - 1]);
+                cenario[I][i] = calcI(cenario[I][i - 1], inputValues[h].value, b, cenario[S][i - 1], k);
+                cenario[R][i] = calcR(cenario[R][i - 1], inputValues[h].value, k, cenario[I][i - 1]);
+            }
+            cenario[D][i] = cenario[R][i] * 0.02;
+        }
+    }
+    if (cenarioN == 2)
+    {
+        cenario[S][0] = inputValues[S0].value;
+        cenario[I][0] = inputValues[I0].value;
+        cenario[R][0] = inputValues[R0].value;
+        cenario[D][0] = cenario[R][0] * 0.02;
+        for (int i = 1; i < t; i++)
+        {
+
+            if (i >= inputValues[tempo_T_k2].value / inputValues[h].value)
+            {
+
+                cenario[S][i] = calcS(cenario[S][i - 1], inputValues[h].value, b, cenario[I][i - 1]);
+                cenario[I][i] = calcI(cenario[I][i - 1], inputValues[h].value, b, cenario[S][i - 1], k2);
+                cenario[R][i] = calcR(cenario[R][i - 1], inputValues[h].value, k2, cenario[I][i - 1]);
+            }
+            else
+            {
+                cenario[S][i] = calcS(cenario[S][i - 1], inputValues[h].value, b, cenario[I][i - 1]);
+                cenario[I][i] = calcI(cenario[I][i - 1], inputValues[h].value, b, cenario[S][i - 1], k);
+                cenario[R][i] = calcR(cenario[R][i - 1], inputValues[h].value, k, cenario[I][i - 1]);
+            }
+            cenario[D][i] = cenario[R][i] * 0.02;
+        }
+    }
+}
+void writeCenarios(double ***cenarios, FILE *outputFile, int t)
+{
+
+    fprintf(outputFile, "Cenario 0 S(t),Cenario 0 I(t),Cenario 0 R(t),Cenario 0 D(t),");
+    fprintf(outputFile, "Cenario 1 S(t),Cenario 1 I(t),Cenario 1 R(t),Cenario 1 D(t),");
+    fprintf(outputFile, "Cenario 2 S(t),Cenario 2 I(t),Cenario 2 R(t),Cenario 2 D(t),");
+    fprintf(outputFile, "tempo(t)\n");
+    for (int j = 0; j < t; j++)
+    {
+        fprintf(outputFile, "%014.10lf,%014.10lf,%014.10lf,%014.10lf,", cenarios[0][S][j],
+                cenarios[0][I][j],
+                cenarios[0][R][j],
+                cenarios[0][D][j]);
+        fprintf(outputFile, "%014.10lf,%014.10lf,%014.10lf,%014.10lf,", cenarios[1][S][j],
+                cenarios[1][I][j],
+                cenarios[1][R][j],
+                cenarios[1][D][j]);
+        fprintf(outputFile, "%014.10lf,%014.10lf,%014.10lf,%014.10lf,", cenarios[2][S][j],
+                cenarios[2][I][j],
+                cenarios[2][R][j],
+                cenarios[2][D][j]);
+        fprintf(outputFile, "%08.4lf\n", j * inputValues[h].value);
+    }
+}
+
+void createSimulation(int t, FILE *output, char outputFileName[])
+{
+    double *cenario0[4], *cenario1[4], *cenario2[4];
+    puts("Alocando cenario 0 ===============================");
+    allocCenario(cenario0, t, 0);
+    puts("Alocando cenario 1 ===============================");
+    allocCenario(cenario1, t, 1);
+    puts("Alocando cenario 2 ===============================");
+    allocCenario(cenario2, t, 2);
+
+    puts("Calculando os valores de k, b e k2, b2 ===========");
+    double k = calcK(inputValues[m_k].value, inputValues[n_k].value, inputValues[T_k].value);
+    double b = calcB(inputValues[N_b].value, inputValues[T_b].value, inputValues[S_b0].value, inputValues[I_b0].value);
+
+    double k2 = calcK(inputValues[m_k].value, inputValues[n_k].value, inputValues[T_k2].value);
+    double b2 = calcB(inputValues[N_b].value, inputValues[T_b2].value, inputValues[S_b0].value, inputValues[I_b0].value);
+
+    puts("Simulando cenario 0 ==============================");
+    simulateCenario(cenario0, t, 0, b, b2, k, k2);
+    puts("Simulando cenario 1 ==============================");
+    simulateCenario(cenario1, t, 1, b, b2, k, k2);
+    puts("Simulando cenario 2 ==============================");
+    simulateCenario(cenario2, t, 2, b, b2, k, k2);
+
+    double **cenarios[3] = {cenario0, cenario1, cenario2};
+
+    printf("Escrevendo os cenarios em %s ", outputFileName);
+    for (int i = 0; i < 50 - (27 + strlen(outputFileName)); i++)
+    {
+        printf("=");
+    }
+    puts("");
+    writeCenarios(cenarios, output, t);
+    fclose(output);
+    puts("Arquivo salvo e fechado");
+}
+
+void plotSimulation(char file[])
+{
     char command[51];
-    sprintf(command, "python3 plot.py %s\n", file);
+    sprintf(command, "python plot.py %s \n", file);
+    puts("Plotando os graficos =============================");
+    puts("Aperte ESC ou feche a janela para encerrar =======");
     system(command);
 }
 
-/**
- * Le o arquivo txt e armazena na variavel do inputValues
- * @param[in] input
- */
-
-void readTxt(FILE *input) {
+void readTxt(FILE *input)
+{
     char lines[21];
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 15; i++)
+    {
         fscanf(input, "%[^\n]%*c", lines);
         sscanf(lines, "%[^=]", inputValues[i].name);
         int x = 0;
-        while (lines[x++] != '=');
+        while (lines[x++] != '=')
+            ;
 
-        while (!('0' <= lines[x] && lines[x] <= '9')) {
+        while (!('0' <= lines[x] && lines[x] <= '9'))
+        {
             x++;
         }
         inputValues[i].value = atof(&lines[x]);
@@ -222,18 +226,40 @@ void readTxt(FILE *input) {
  */
 int main(int argc, char *argv[])
 {
+    char inputFileName[51];
+    char outputFileName[51];
+    float hours;
     // Validação da entrada
     if (argc < 4)
     {
-        puts("Lembre-se de passar os nomes dos arquivos de entrada e saída e o tempo de simulação");
-        return 1;
+        puts("Voce nao passou os nomes dos arquivos de parametros, o de saida e/ou o tempo de simulacão, por favor informe-os agora");
+        printf("Arquivo com os parametros: ");
+        scanf("%s", inputFileName);
+        printf("Arquivo .csv de saida: ");
+        scanf("%s", outputFileName);
+        printf("Tempo (em horas) da simulacao: ");
+        scanf("%f", &hours);
     }
-    FILE *input = fopen(argv[1], "r"); // Arquivo txt de entrada
-    FILE *output = fopen(argv[2], "w"); // Arquivo csv da saida
+    else
+    {
+        strcpy(inputFileName, argv[1]);
+        strcpy(outputFileName, argv[2]);
+        hours = atof(argv[3]);
+    }
+    FILE *input = fopen(inputFileName, "r"); // Arquivo txt de entrada
+    while (input == NULL)
+    {
+        puts("Arquivo de parametro nao encontrado, informe-o novamente:");
+        printf("Arquivo com os parametros:");
+        scanf("%s", inputFileName);
+        input = fopen(inputFileName, "r");
+    }
 
+    FILE *output = fopen(outputFileName, "w"); // Arquivo csv da saida
     readTxt(input);
-    createSimulation((int)(atof(argv[3]) / inputValues[h].value), output);
-    plotSimulation(argv[2]);
+    puts("Parametros lidos");
+    createSimulation((int)(hours / inputValues[h].value), output, outputFileName);
+    plotSimulation(outputFileName);
 
     return 0;
 }

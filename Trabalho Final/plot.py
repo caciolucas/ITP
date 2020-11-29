@@ -25,22 +25,25 @@ class matplotlibSwitchGraphs:
         self.config_window()
         self.draw_graph_one()
         self.frame.pack(expand=YES, fill=BOTH)
-        master.bind('<Escape>', sys.exit)
+        self.master.bind('<Escape>', sys.exit)
 
     def config_window(self):
-        self.canvas.mpl_connect("key_press_event", self.on_key_press)
+        # self.canvas.mpl_connect("key_press_event", self.on_key_press)
         toolbar = NavigationToolbar2Tk(self.canvas, self.master)
         toolbar.update()
         self.canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
+        self.buttons = Frame(self.master,relief="groove",width=100,padx=200)
+        self.buttons.pack(side=BOTTOM)
         self.button_switch = Button(
-            self.master, text="Proximo Cenário", command=self.next_graph)
-        self.button_switch.pack(side=BOTTOM)
+            self.buttons, text="Proximo Cenário",width=20,command=self.next_graph)
+        self.button_switch.pack(side=RIGHT)
         self.button_switch_before = Button(
-            self.master, text="Voltar Cenário", command=self.previous_graph)
-        self.button_switch_before.pack(side=BOTTOM)
+            self.buttons, text="Voltar Cenário",width=20, command=self.previous_graph)
+        self.button_switch_before.pack(side=LEFT)
 
 
     def draw_graph_one(self):
+        self.master.title("Cenario 1")
         self.ax.clear() 
         global c0, t, styles
         max_y = 0
@@ -62,6 +65,7 @@ class matplotlibSwitchGraphs:
         self.canvas.draw()
 
     def draw_graph_two(self):
+        self.master.title("Cenario 1")
         self.ax.clear()
         global c1, t, styles
         max_y = 0
@@ -83,6 +87,7 @@ class matplotlibSwitchGraphs:
         self.canvas.draw()
 
     def draw_graph_three(self):
+        self.master.title("Cenario 2")
         self.ax.clear() 
         global c2, t, styles
         max_y = 0
@@ -105,11 +110,11 @@ class matplotlibSwitchGraphs:
                     title="Cenário 2 (Menor Tempo de Recuperação 'T_k)")
         self.canvas.draw()
 
-    def on_key_press(self, event):
-        key_press_handler(event, self.canvas)
+    # def on_key_press(self, event):
+    #     key_press_handler(event, self.canvas)
 
-    def _quit(self):
-        self.master.quit()  # stops mainloop
+    # def _quit(self):
+    #     self.master.quit()  # stops mainloop
 
     def next_graph(self):
         self.graphIndex = (self.graphIndex + 1) % 3
@@ -195,7 +200,9 @@ def main():
     c1 = [s1, i1, r1, d1]
     global c2
     c2 = [s2, i2, r2, d2]
+    
     root = Tk()
+    root.resizable(False, False)
     matplotlibSwitchGraphs(root)
     root.mainloop()
 
