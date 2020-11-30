@@ -6,17 +6,14 @@
  * popular os vetores S, I e R da simulação.
  */
 
+#ifndef SIMULATION_H
+#define SIMULATION_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef CALC_H
 #include "calc.h"
-#endif
-#ifndef FILEANDPLOT_H
 #include "fileandplot.h"
-#endif
-#define SIMULATION_H
 
 /**
  * @brief Faz a simulação acontecer usando as demais funções
@@ -54,3 +51,5 @@ void simulateCenario(double *cenario[], int t, int cenarioN, double b, double b2
  * @param n Número para identificar o cenário
  */
 void allocCenario(double *cenario[], int t, int n);
+
+#endif

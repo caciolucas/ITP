@@ -6,7 +6,7 @@
  * @details Prototipa as funções que calculam as taxas b e k e os valores dos 
  * vetores S, I e R da simulação.
  */
-
+#ifndef CALC_H
 #define CALC_H
 /**
  * Recebe os valores necessários para calcular o valor da iteração atual de S
@@ -71,3 +71,5 @@ double calcK(
     double m_kNumber,
     double n_kNumber,
     double T_kNumber);
+
+#endif

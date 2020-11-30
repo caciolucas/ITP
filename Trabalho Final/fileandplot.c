@@ -57,6 +57,9 @@ void plotSimulation(char file[])
 {
     char command[51];
     sprintf(command, "python plot.py %s \n", file);
+    #ifdef linux
+    sprintf(command, "python3 plot.py %s \n", file);
+    #endif
     puts("Plotando os graficos =============================");
     puts("Aperte ESC ou feche a janela para encerrar =======");
     system(command);

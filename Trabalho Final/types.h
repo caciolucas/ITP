@@ -6,7 +6,7 @@
  * em qualquer função e define o enum \ref paramIndex que relaciona o parâmetro com sua posição
  * no \ref inputValues
  */
-
+#ifndef TYPES_H
 #define TYPES_H
 typedef struct
 {
@@ -60,3 +60,4 @@ enum paramIndex
     T_k2 /// 14
 };
 
+#endif

@@ -4,14 +4,14 @@
  * @details Prototipa a função que lê o arquivo de parâmetros, a que escreve no
  * arquivo csv de saída e a que chama pelo terminal o script ploy.py.
  */
+
+#ifndef FILEANDPLOT_H
+#define FILEANDPLOT_H
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef TYPES_H
 #include "types.h"
-#endif
 
-#define FILEANDPLOT_H
 /**
  * @brief Lê o arquivo txt e armazena na variavel do inputValues
  * @details Lê o arquivo de texto com os parâmetros e armazena o nome e valor
@@ -35,3 +35,5 @@ void writeCenarios(double ***cenarios, FILE *outputFile, int t);
  * que irá traçar os gráficos, o plot.py 
  */
 void plotSimulation(char file[]);
+
+#endif
