@@ -1,7 +1,7 @@
 /**
  * @file fileandplot.c
- * @brief Funções relacionadas a manipulação dos arquivos de saída e entrada
- * @details Prototipa a função que lê o arquivo de parâmetros, a que escreve no
+ * @brief Implementação das funções relacionadas a manipulação dos arquivos de saída e entrada
+ * @details Define a função que lê o arquivo de parâmetros, a que escreve no
  * arquivo csv de saída e a que chama pelo terminal o script ploy.py.
  */
 

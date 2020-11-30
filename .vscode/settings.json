@@ -13,5 +13,6 @@
         "valarray": "c",
         "type_traits": "c",
         "*.tcc": "cpp"
-    }
+    },
+    "python.pythonPath": "C:\\Users\\cacio\\AppData\\Local\\Programs\\Python\\Python37\\python.exe"
 }

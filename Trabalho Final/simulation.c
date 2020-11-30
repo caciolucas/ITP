@@ -1,7 +1,7 @@
 /**
  * @file simulation.c
- * @brief Funções relacionadas aos vetores da simulação
- * @details Prototipa as funções que fazem a simulação acontecer, alocam a 
+ * @brief Implementa as funções relacionadas aos vetores da simulação
+ * @details Define as funções que fazem a simulação acontecer, alocam a 
  * memória dos vetores e usam as funções calcS, calcI e calcR para
  * popular os vetores S, I e R da simulação.
  */

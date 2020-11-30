@@ -1,3 +1,5 @@
+clean: main
+	del *.o /f
 main: main.o simulation.o fileandplot.o calc.o
 	gcc -o main  main.o simulation.o fileandplot.o calc.o -lm
 main.o: main.c

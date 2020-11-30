@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include "simulation.h"
 
+/**
+ * @file main.
+ * @brief Recebe os parâmetros pela linha de comando e executa as funções da simulação
+ */
 
 /**
  * Recebe como parâmetro os nomes dos arquivos de entrada e saída e o tempo t da simulação em horas\n 

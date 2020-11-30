@@ -1,3 +1,9 @@
+from matplotlib.backend_bases import key_press_handler
+from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg, NavigationToolbar2Tk)
+from tkinter import *
+import matplotlib
+import matplotlib.pyplot as plt
 import subprocess
 import csv
 
@@ -20,26 +26,26 @@ class matplotlibSwitchGraphs:
         self.config_window()
         self.draw_graph_one()
         self.frame.pack(expand=YES, fill=BOTH)
-        self.master.bind('<Escape>', sys.exit)
+        master.bind('<Escape>', sys.exit)
 
     def config_window(self):
-        # self.canvas.mpl_connect("key_press_event", self.on_key_press)
+        self.canvas.mpl_connect("key_press_event", self.on_key_press)
         toolbar = NavigationToolbar2Tk(self.canvas, self.master)
         toolbar.update()
         self.canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
-        self.buttons = Frame(self.master,relief="groove",width=100,padx=200)
-        self.buttons.pack(side=BOTTOM)
+        self.buttonFrame = Frame(self.master,relief="ridge")        
+        self.buttonFrame.pack(side=BOTTOM)
         self.button_switch = Button(
-            self.buttons, text="Proximo Cenário",width=20,command=self.next_graph)
+            self.buttonFrame, text="Proximo Cenário", command=self.next_graph)
         self.button_switch.pack(side=RIGHT)
         self.button_switch_before = Button(
-            self.buttons, text="Voltar Cenário",width=20, command=self.previous_graph)
+            self.buttonFrame, text="Cenário Anterior", command=self.previous_graph)
         self.button_switch_before.pack(side=LEFT)
 
 
     def draw_graph_one(self):
-        self.master.title("Cenario 1")
         self.ax.clear() 
+        self.master.title("Cenario 0")
         global c0, t, styles
         max_y = 0
         for linha in c0:
@@ -60,8 +66,9 @@ class matplotlibSwitchGraphs:
         self.canvas.draw()
 
     def draw_graph_two(self):
-        self.master.title("Cenario 1")
         self.ax.clear()
+        self.master.title("Cenario 1")
+        
         global c1, t, styles
         max_y = 0
         for linha in c1:
@@ -82,8 +89,9 @@ class matplotlibSwitchGraphs:
         self.canvas.draw()
 
     def draw_graph_three(self):
-        self.master.title("Cenario 2")
         self.ax.clear() 
+        self.master.title("Cenario 2")
+
         global c2, t, styles
         max_y = 0
 
@@ -105,11 +113,11 @@ class matplotlibSwitchGraphs:
                     title="Cenário 2 (Menor Tempo de Recuperação 'T_k)")
         self.canvas.draw()
 
-    # def on_key_press(self, event):
-    #     key_press_handler(event, self.canvas)
+    def on_key_press(self, event):
+        key_press_handler(event, self.canvas)
 
-    # def _quit(self):
-    #     self.master.quit()  # stops mainloop
+    def _quit(self):
+        self.master.quit()  # stops mainloop
 
     def next_graph(self):
         self.graphIndex = (self.graphIndex + 1) % 3
@@ -129,27 +137,8 @@ class matplotlibSwitchGraphs:
         else:
             self.draw_graph_two()
 
-
-def import_or_install(package):
-    try:
-        __import__(package)
-    except ImportError:
-        print("Instalando {}...".format(package))
-        print("Não se preocupe, só sera instalada uma vez ;)")
-        subprocess.call("python -m pip install {} -q".format(package))
-        print("{} instalada".format(package))
-
-
 def main():
-    import_or_install('matplotlib')
-    import_or_install('matplotlib')
-    import tkinter as tk
-    import matplotlib
     matplotlib.use("TkAgg")
-    from matplotlib.backend_bases import key_press_handler
-    from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
-    import matplotlib.pyplot as plt
 
     global styles
     styles = [
@@ -201,9 +190,8 @@ def main():
     c1 = [s1, i1, r1, d1]
     global c2
     c2 = [s2, i2, r2, d2]
-    
-    root = tk.Tk()
-    root.resizable(False, False)
+    root = Tk()
+    root.resizable(False,False)
     matplotlibSwitchGraphs(root)
     root.mainloop()
 
