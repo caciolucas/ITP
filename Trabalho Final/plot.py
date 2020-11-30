@@ -1,9 +1,12 @@
-from matplotlib.backend_bases import key_press_handler
+import matplotlib
+matplotlib.use("TkAgg")
+import matplotlib.pyplot as plt
+import numpy as np
+from tkinter import *
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
-from tkinter import *
-import matplotlib
-import matplotlib.pyplot as plt
+# Implement the default Matplotlib key bindings.
+from matplotlib.backend_bases import key_press_handler
 import subprocess
 import csv
 
@@ -138,7 +141,6 @@ class matplotlibSwitchGraphs:
             self.draw_graph_two()
 
 def main():
-    matplotlib.use("TkAgg")
 
     global styles
     styles = [
