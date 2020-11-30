@@ -5,6 +5,8 @@
  * arquivo csv de saída e a que chama pelo terminal o script ploy.py.
  */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "fileandplot.h"
 
 void readTxt(FILE *input)

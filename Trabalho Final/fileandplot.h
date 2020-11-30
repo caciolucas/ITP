@@ -1,10 +1,17 @@
 /**
- * @file fileandplot.c
+ * @file fileandplot.h
  * @brief Funções relacionadas a manipulação dos arquivos de saída e entrada
  * @details Prototipa a função que lê o arquivo de parâmetros, a que escreve no
  * arquivo csv de saída e a que chama pelo terminal o script ploy.py.
  */
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifndef TYPES_H
 #include "types.h"
+#endif
+
+#define FILEANDPLOT_H
 /**
  * @brief Lê o arquivo txt e armazena na variavel do inputValues
  * @details Lê o arquivo de texto com os parâmetros e armazena o nome e valor

@@ -7,6 +7,7 @@
  * vetores S, I e R da simulação.
  */
 
+#define CALC_H
 /**
  * Recebe os valores necessários para calcular o valor da iteração atual de S
  * @param[in] SLessOne Valor de S na posição anterior no vetor S do cenario

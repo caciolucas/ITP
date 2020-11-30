@@ -5,41 +5,144 @@
  * memória dos vetores e usam as funções calcS, calcI e calcR para
  * popular os vetores S, I e R da simulação.
  */
-#include "calc.c"
-#include "fileandplot.c"
-/**
- * @brief Faz a simulação acontecer usando as demais funções
- * @details Aloca espaço pros 3 cenários usando \ref allocCenario
- * calcula as taxas b,k e b2,k2 usando \ref calcB e \ref calcK com 
- * os parâmetros recebidos no arquivo de entrada. Simula cada um 
- * dos cenários com a \ref simulateCenario e então, escreve cada um
- * dos cenários no arquivo de saida csv com \ref writeCenarios.
- * 
- * @param t Quantidade de iterações que a simulação terá 
- * @param output Ponteiro pro arquivo csv onde serão escritos os dados simulados
- * @param outputFileName Nome do arquivo csv de saída usado para print no terminal
- */
-void createSimulation(int t, FILE *output, char outputFileName[]);
-/**
- * @brief Popula os 4 vetores S, I, R e D de um cenário
- * @details Percorre os 4 vetores e cada iteração vai os preenchendo
- * usando  as funções \ref calcS, \ref calcI e \ref calcR .
- * 
- * @param cenario Vetor com os 4 vetores S, I, R e D a serem populados 
- * @param t Quantidade total de iterações da simulação
- * @param cenarioN Número do cenário (0,1 ou 2)
- * @param b Taxa b (taxa de contágio) usada em todos os cenários
- * @param b2 Taxa b (taxa de contágio) usada somente no cenário 1
- * @param k Taxa k (taxa de recuperação) usada em todos os cenários
- * @param k2 Taxa k (taxa de recuperação) usada somente no cenário 2
- */
-void simulateCenario(double *cenario[], int t, int cenarioN, double b, double b2, double k, double k2);
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "simulation.h"
 
-/**
- * @brief Aloca espaço na memória pra os 4 vetores S, I, R e D do respectivo cenário
- * @details Aloca espaço pros 4 vetores do cenário usando o parametro t e a função malloc
- * @param cenario Vetor com os 4 vetores S, I, R e D a serem alocados
- * @param t Quantidade total de iterações (itens) que os vetores terão
- * @param n Número para identificar o cenário
- */
-void allocCenario(double *cenario[], int t, int n);
+
+void createSimulation(int t, FILE *output, char outputFileName[])
+{
+    double *cenario0[4], *cenario1[4], *cenario2[4];
+    puts("Alocando cenario 0 ===============================");
+    allocCenario(cenario0, t, 0);
+    puts("Alocando cenario 1 ===============================");
+    allocCenario(cenario1, t, 1);
+    puts("Alocando cenario 2 ===============================");
+    allocCenario(cenario2, t, 2);
+
+    puts("Calculando os valores de k, b e k2, b2 ===========");
+    double k = calcK(inputValues[m_k].value, inputValues[n_k].value, inputValues[T_k].value);
+    double b = calcB(inputValues[N_b].value, inputValues[T_b].value, inputValues[S_b0].value, inputValues[I_b0].value);
+
+    double k2 = calcK(inputValues[m_k].value, inputValues[n_k].value, inputValues[T_k2].value);
+    double b2 = calcB(inputValues[N_b].value, inputValues[T_b2].value, inputValues[S_b0].value, inputValues[I_b0].value);
+
+    puts("Simulando cenario 0 ==============================");
+    simulateCenario(cenario0, t, 0, b, b2, k, k2);
+    puts("Simulando cenario 1 ==============================");
+    simulateCenario(cenario1, t, 1, b, b2, k, k2);
+    puts("Simulando cenario 2 ==============================");
+    simulateCenario(cenario2, t, 2, b, b2, k, k2);
+
+    double **cenarios[3] = {cenario0, cenario1, cenario2};
+
+    printf("Escrevendo os cenarios em %s ", outputFileName);
+    for (int i = 0; i < 50 - (27 + strlen(outputFileName)); i++)
+    {
+        printf("=");
+    }
+    puts("");
+    writeCenarios(cenarios, output, t);
+    fclose(output);
+    puts("Arquivo salvo e fechado");
+}
+
+void simulateCenario(double *cenario[], int t, int cenarioN, double b, double b2, double k, double k2)
+{
+    if (cenarioN == 0)
+    {
+        cenario[S][0] = inputValues[S0].value;
+        cenario[I][0] = inputValues[I0].value;
+        cenario[R][0] = inputValues[R0].value;
+        cenario[D][0] = cenario[R][0] * 0.02;
+        for (int i = 1; i < t; i++)
+        {
+            cenario[S][i] = calcS(cenario[S][i - 1], inputValues[h].value, b, cenario[I][i - 1]);
+            cenario[I][i] = calcI(cenario[I][i - 1], inputValues[h].value, b, cenario[S][i - 1], k);
+            cenario[R][i] = calcR(cenario[R][i - 1], inputValues[h].value, k, cenario[I][i - 1]);
+            cenario[D][i] = cenario[R][i] * 0.02;
+        }
+    }
+    if (cenarioN == 1)
+    {
+        cenario[S][0] = inputValues[S0].value;
+        cenario[I][0] = inputValues[I0].value;
+        cenario[R][0] = inputValues[R0].value;
+        cenario[D][0] = cenario[R][0] * 0.02;
+        for (int i = 1; i < t; i++)
+        {
+
+            if (i >= inputValues[tempo_T_b2].value / inputValues[h].value)
+            {
+
+                cenario[S][i] = calcS(cenario[S][i - 1], inputValues[h].value, b2, cenario[I][i - 1]);
+                cenario[I][i] = calcI(cenario[I][i - 1], inputValues[h].value, b2, cenario[S][i - 1], k);
+                cenario[R][i] = calcR(cenario[R][i - 1], inputValues[h].value, k, cenario[I][i - 1]);
+            }
+            else
+            {
+                cenario[S][i] = calcS(cenario[S][i - 1], inputValues[h].value, b, cenario[I][i - 1]);
+                cenario[I][i] = calcI(cenario[I][i - 1], inputValues[h].value, b, cenario[S][i - 1], k);
+                cenario[R][i] = calcR(cenario[R][i - 1], inputValues[h].value, k, cenario[I][i - 1]);
+            }
+            cenario[D][i] = cenario[R][i] * 0.02;
+        }
+    }
+    if (cenarioN == 2)
+    {
+        cenario[S][0] = inputValues[S0].value;
+        cenario[I][0] = inputValues[I0].value;
+        cenario[R][0] = inputValues[R0].value;
+        cenario[D][0] = cenario[R][0] * 0.02;
+        for (int i = 1; i < t; i++)
+        {
+
+            if (i >= inputValues[tempo_T_k2].value / inputValues[h].value)
+            {
+
+                cenario[S][i] = calcS(cenario[S][i - 1], inputValues[h].value, b, cenario[I][i - 1]);
+                cenario[I][i] = calcI(cenario[I][i - 1], inputValues[h].value, b, cenario[S][i - 1], k2);
+                cenario[R][i] = calcR(cenario[R][i - 1], inputValues[h].value, k2, cenario[I][i - 1]);
+            }
+            else
+            {
+                cenario[S][i] = calcS(cenario[S][i - 1], inputValues[h].value, b, cenario[I][i - 1]);
+                cenario[I][i] = calcI(cenario[I][i - 1], inputValues[h].value, b, cenario[S][i - 1], k);
+                cenario[R][i] = calcR(cenario[R][i - 1], inputValues[h].value, k, cenario[I][i - 1]);
+            }
+            cenario[D][i] = cenario[R][i] * 0.02;
+        }
+    }
+}
+void allocCenario(double *cenario[], int t, int n)
+{
+    char c;
+    for (int i = 0; i < 4; i++)
+    {
+        switch (i)
+        {
+        case 0:
+            c = 'S';
+            break;
+        case 1:
+            c = 'I';
+            break;
+        case 2:
+            c = 'R';
+            break;
+        case 3:
+            c = 'D';
+            break;
+        }
+        cenario[i] = malloc(sizeof(double[t]));
+        if (cenario[i] == NULL)
+        {
+            printf("Erro na alocacao de espaco do cenario %d %c\n", n, c);
+        }
+        else
+        {
+            printf("Cenario %d %c alocado corretamente\n", n, c);
+        }
+    }
+}

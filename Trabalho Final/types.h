@@ -6,6 +6,8 @@
  * em qualquer função e define o enum \ref paramIndex que relaciona o parâmetro com sua posição
  * no \ref inputValues
  */
+
+#define TYPES_H
 typedef struct
 {
     double value;  ///< Valor do parâmetro

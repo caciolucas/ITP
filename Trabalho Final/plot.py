@@ -1,8 +1,3 @@
-from matplotlib.backend_bases import key_press_handler
-from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
-from tkinter import *
-import matplotlib.pyplot as plt
 import subprocess
 import csv
 
@@ -147,8 +142,14 @@ def import_or_install(package):
 
 def main():
     import_or_install('matplotlib')
+    import_or_install('matplotlib')
+    import tkinter as tk
     import matplotlib
     matplotlib.use("TkAgg")
+    from matplotlib.backend_bases import key_press_handler
+    from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg, NavigationToolbar2Tk)
+    import matplotlib.pyplot as plt
 
     global styles
     styles = [
@@ -201,7 +202,7 @@ def main():
     global c2
     c2 = [s2, i2, r2, d2]
     
-    root = Tk()
+    root = tk.Tk()
     root.resizable(False, False)
     matplotlibSwitchGraphs(root)
     root.mainloop()
