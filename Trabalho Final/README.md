@@ -1,6 +1,10 @@
 
 # Informações Importantes
 
+## Alunos
+- Cácio Lucas Nobre de Almeida Bezerra _**(20200037607)**_
+- Rafael Silva Freire _**(20200000071)**_
+
 ## Requerimentos
 Para execução do programa é requerido:
 
