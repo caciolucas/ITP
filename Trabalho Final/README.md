@@ -46,11 +46,11 @@ Execute o arquivo compilado passando como argumentos, respectivamente, o arquivo
 
 _(Windows)_
 ```
-main entrada.txt output.csv 500
+main -i entrada.txt -o output.csv -t 500
 ```
 _(Linux)_
 ```
-./main entrada.txt output.csv 500
+./main -i entrada.txt -o output.csv -t 500
 ```
 Neste caso:
 
