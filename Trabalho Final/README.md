@@ -111,6 +111,18 @@ tempo_T_k2=250
 T_k2=12
 ```
 
+### Entrada por linha de comando
+
+Se quiser alterar algum parametro da entrada sem alterar o arquivo basta fazer isso pela linha de comando como no exemplo a baixo
+
+```bash
+# windows
+main -i entrada.txt -o output.csv -t 500 -S_0 300 -h 0.5
+
+# linux
+./main -i entrada.txt -o output.csv -t 500 -S_0 300 -h 0.5
+```
+
 ## Plotagem dos dados
 
 ### Chamada automática
