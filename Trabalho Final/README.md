@@ -75,9 +75,9 @@ Dessa forma, o programa irá lhe pedir os parâmetros necessários pro funcionam
 O arquivo de entrada deverá ser um arquivo de texto seguindo o formato a seguir:
 
 ```
-S(0)=[valor]
-I(0)=[valor]
-R(0)=[valor]
+S_0=[valor]
+I_0=[valor]
+R_0=[valor]
 h=[valor]
 N_b=[valor]
 T_b=[valor]
@@ -94,9 +94,9 @@ T_k2=[valor]
 Onde `valor` é o respectivo valor do parâmetro, como no exemplo a seguir:
 
 ```
-S(0)=70
-I(0)=2
-R(0)=0
+S_0=70
+I_0=2
+R_0=0
 h=0.1
 N_b=12
 T_b=24
