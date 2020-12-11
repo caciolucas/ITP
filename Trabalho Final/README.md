@@ -56,7 +56,7 @@ Neste caso:
 
 * `-i` (é o indicativo de que o próximo parametro é o arquvio de entrada);
 * `entrada.txt` (é o arquivo de entrada com os parâmetros do caso analisado);
-* `-0` (é o indicativo de que o próximo parametro é o arquvio de saida);
+* `-o` (é o indicativo de que o próximo parametro é o arquvio de saida);
 * `output.csv` (é o arquivo de saída que deverá ser criado);
 * `-t` (é o indicativo de que o próximo parametro é quantidade de horas da simulação);
 * `500` (é a quantidade de horas que a simulação terá);
